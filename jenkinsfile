@@ -1,0 +1,33 @@
+    agent any
+
+    stages {
+        stage('Compile') {
+            steps {
+                echo "Compiling the Code.........."
+              git credentialsId: 'Github-Details', url: 'https://github.com/shefalisardana/SampleWebProject'
+                bat "mvn compile"
+            }
+        }
+        stage('Testing') {
+            steps {
+                echo "Testing the Code.........."
+                  git credentialsId: 'Github-Details', url: 'https://github.com/shefalisardana/SampleWebProject'
+                bat "mvn test"
+            }
+        }
+        stage('Packaging') {
+            steps {
+                echo "Packaging the Code.........."
+             git credentialsId: 'Github-Details', url: 'https://github.com/shefalisardana/SampleWebProject'
+                bat "mvn package" 
+            }
+        }
+       stage('deploy') {
+            steps {
+                echo "deploying the Code.........."
+                bat "mvn package" 
+                deploy adapters: [tomcat7(credentialsId: 'tomcat-credentials', path: '', url: 'http://localhost:8090')], contextPath: 'SampleWebApp.war', war: '**/*.war'
+            }
+        }
+    }
+}
