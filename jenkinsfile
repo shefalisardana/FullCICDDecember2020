@@ -15,7 +15,7 @@
            stage('Deploy To Tomcat') {
             steps {
                 echo "Deploy the war file.........."
-               git credentialsId: 'Github-Details', url: 'https://github.com/shefalisardana/FullCICDDecember2020   
+               git credentialsId: 'Github-Details', url: 'https://github.com/shefalisardana/FullCICDDecember2020'  
               bat "mvn package" 
               deploy adapters: [tomcat7(credentialsId: 'tomcat-credentials', path: '', url: 'http://localhost:8090')], contextPath: 'SampleWebApp.war', war: '**/*.war'
             
