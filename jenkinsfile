@@ -12,5 +12,15 @@
             }
         }
         
+           stage('Deploy To Tomcat') {
+            steps {
+                echo "Build the Code.........."
+            
+                bat "mvn package"
+                deploy adapters: [tomcat7(credentialsId: 'tomcat-credentials', path: '', url: 'http://localhost:8090')], contextPath: 'SampleWebApp.war', war: '**/*.war'
+            }
+        }
+        
+        
     }
 }
